@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
@@ -80,6 +80,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Feb 18 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1.3-9
+- Autorebuild for GCC 4.3
+
 * Tue Nov 14 2006 Francois Aucamp <faucamp@csir.co.za> - 1.3-8
 - Added comment to %%build stating why "_smp_flags" isn't used with make
 
