@@ -1,10 +1,10 @@
 Name:           flite
 Version:        1.3
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
-License:        BSD-style
+License:        MIT
 URL:            http://fife.speech.cs.cmu.edu/flite/
 Source0:        http://fife.speech.cs.cmu.edu/flite/packed/%{name}-%{version}/%{name}-%{version}-release.tar.gz
 Source1:        README-ALSA.txt
@@ -80,6 +80,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jul 18 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1.3-10
+- fix license tag
+
 * Mon Feb 18 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1.3-9
 - Autorebuild for GCC 4.3
 
