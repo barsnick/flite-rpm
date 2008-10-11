@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
@@ -13,7 +13,12 @@ Patch1:         flite-1.3-doc_texinfo.patch
 Patch2:         flite-1.3-alsa_support.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  texi2html ed alsa-lib-devel autoconf
+%if 0%{?el4}
+# there is no texi2html for RHEL 4
+%else
+BuildRequires:  texi2html
+%endif
+BuildRequires:  ed alsa-lib-devel autoconf
 
 
 %description
@@ -47,8 +52,12 @@ autoconf
 # This package fails parallel make (thus cannot be built using "_smp_flags")
 make
 # Build documentation
+%if 0%{?el4}
+# there is no texi2html for RHEL 4
+%else
 cd doc
 make flite.html
+%endif
 
 
 %install
@@ -68,7 +77,12 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
+%if 0%{?el4}
+# there is no texi2html for RHEL 4
+%doc ACKNOWLEDGEMENTS README COPYING README-ALSA.txt
+%else
 %doc ACKNOWLEDGEMENTS README COPYING doc/html README-ALSA.txt
+%endif
 %{_libdir}/*.so.*
 %{_bindir}/*
 
@@ -80,6 +94,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Oct 11 2008 Peter Lemenkov <lemenkov@gmail.com> - 1.3-11
+- Fix for RHEL 4
+ 
 * Fri Jul 18 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 1.3-10
 - fix license tag
 
