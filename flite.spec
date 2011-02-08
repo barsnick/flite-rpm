@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
@@ -94,6 +94,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-15
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
