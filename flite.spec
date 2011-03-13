@@ -1,16 +1,17 @@
 Name:           flite
 Version:        1.3
-Release:        15%{?dist}
+Release:        16%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
 License:        MIT
-URL:            http://fife.speech.cs.cmu.edu/flite/
-Source0:        http://fife.speech.cs.cmu.edu/flite/packed/%{name}-%{version}/%{name}-%{version}-release.tar.gz
+URL:            http://www.speech.cs.cmu.edu/flite/
+Source0:        http://www.speech.cs.cmu.edu/flite/packed/%{name}-%{version}/%{name}-%{version}-release.tar.gz
 Source1:        README-ALSA.txt
 Patch0:         flite-1.3-sharedlibs.patch
 Patch1:         flite-1.3-doc_texinfo.patch
 Patch2:         flite-1.3-alsa_support.patch
+Patch3:         flite-1.3-implicit_dso_linking.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{?el4}
@@ -43,6 +44,7 @@ Development files for Flite, a small, fast speech synthesis engine.
 %patch0 -p1 -b .flite-1.3-sharedlibs
 %patch1 -p1 -b .flite-1.3-doc_texinfo
 %patch2 -p1 -b .flite-1.3-alsa_support
+%patch3 -p1 -b .flite-1.3-implicit_dso_linking
 cp -p %{SOURCE1} .
 
 
@@ -94,6 +96,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Mar 13 2011 Francois Aucamp <faucamp@fedoraproject.org> - 1.3-16
+- Added patch declaring explicit libm linking dependency (RHBZ #564899)
+- Updated source and URL tags
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
