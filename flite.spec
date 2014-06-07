@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
@@ -98,6 +98,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-22
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Mon Jan  6 2014 Rui Matos <rmatos@redhat.com> - 1.3-21
 - Resolves: (CVE-2014-0027) flite: insecure temporary file use
 
