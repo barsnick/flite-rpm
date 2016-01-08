@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
@@ -13,13 +13,11 @@ Patch1:         flite-1.3-doc_texinfo.patch
 Patch2:         flite-1.3-alsa_support.patch
 Patch3:         flite-1.3-implicit_dso_linking.patch
 Patch4:         0001-auserver.c-Only-write-audio-data-to-a-file-in-debug-.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
-%if 0%{?el4}
-# there is no texi2html for RHEL 4
-%else
+Patch5:         flite-0001-Fixed-texi2html-ambiguity.patch
 BuildRequires:  texi2html
-%endif
+# texi2pdf
+# WARNING see explanation about PDF doc below.
+#BuildRequires:  texinfo-tex
 BuildRequires:  ed alsa-lib-devel autoconf
 
 
@@ -33,7 +31,7 @@ Festival for voices built using the FestVox suite of voice building tools.
 %package devel
 Summary: Development files for flite
 Group: Development/Libraries
-Requires: flite = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 
 %description devel
@@ -47,6 +45,7 @@ Development files for Flite, a small, fast speech synthesis engine.
 %patch2 -p1 -b .flite-1.3-alsa_support
 %patch3 -p1 -b .flite-1.3-implicit_dso_linking
 %patch4 -p1
+%patch5 -p1
 cp -p %{SOURCE1} .
 
 
@@ -56,21 +55,14 @@ autoconf
 # This package fails parallel make (thus cannot be built using "_smp_flags")
 make
 # Build documentation
-%if 0%{?el4}
-# there is no texi2html for RHEL 4
-%else
 cd doc
+# WARNING "make doc" provides a huge PDF file. It was decided not to produce/package it.
+#make doc
 make flite.html
-%endif
 
 
 %install
-rm -rf %{buildroot}
 make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_libdir}  INSTALLINCDIR=%{buildroot}%{_includedir}/flite
-
-
-%clean
-rm -rf %{buildroot}
 
 
 %post -p /sbin/ldconfig
@@ -80,24 +72,21 @@ rm -rf %{buildroot}
 
 
 %files
-%defattr(-,root,root,-)
-%if 0%{?el4}
-# there is no texi2html for RHEL 4
-%doc ACKNOWLEDGEMENTS README COPYING README-ALSA.txt
-%else
 %doc ACKNOWLEDGEMENTS README COPYING doc/html README-ALSA.txt
-%endif
 %{_libdir}/*.so.*
 %{_bindir}/*
 
 
 %files devel
-%defattr(-,root,root)
 %{_libdir}/*.so
 %{_includedir}/flite
 
 
 %changelog
+* Fri Jan  8 2016 Peter Lemenkov <lemenkov@gmail.com> - 1.3-25
+- Fixed FTBFS in Rawhide
+- Remove pre-EPEL6 support
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-24
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
