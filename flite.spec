@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        28%{?dist}
+Release:        29%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 
 Group:          Applications/Multimedia
@@ -83,6 +83,9 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 
 %changelog
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-29
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
