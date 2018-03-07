@@ -2,10 +2,9 @@ Name:           flite
 Version:        1.3
 Release:        30%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
-
-Group:          Applications/Multimedia
 License:        MIT
 URL:            http://www.speech.cs.cmu.edu/flite/
+
 Source0:        http://www.speech.cs.cmu.edu/flite/packed/%{name}-%{version}/%{name}-%{version}-release.tar.gz
 Source1:        README-ALSA.txt
 Patch0:         flite-1.3-sharedlibs.patch
@@ -18,7 +17,9 @@ BuildRequires:  texi2html
 # texi2pdf
 # WARNING see explanation about PDF doc below.
 #BuildRequires:  texinfo-tex
-BuildRequires:  ed alsa-lib-devel autoconf
+BuildRequires:  gcc
+BuildRequires:  autoconf automake libtool
+BuildRequires:  ed alsa-lib-devel
 
 
 %description
@@ -30,9 +31,7 @@ Festival for voices built using the FestVox suite of voice building tools.
 
 %package devel
 Summary: Development files for flite
-Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
-
 
 %description devel
 Development files for Flite, a small, fast speech synthesis engine.
@@ -50,7 +49,7 @@ cp -p %{SOURCE1} .
 
 
 %build
-autoconf
+autoreconf -vif
 %configure --enable-shared --with-audio=alsa
 # This package fails parallel make (thus cannot be built using "_smp_flags")
 make
@@ -72,7 +71,8 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 
 %files
-%doc ACKNOWLEDGEMENTS README COPYING doc/html README-ALSA.txt
+%license COPYING
+%doc ACKNOWLEDGEMENTS README doc/html README-ALSA.txt
 %{_libdir}/*.so.*
 %{_bindir}/*
 
@@ -83,6 +83,9 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 
 %changelog
+* Wed Mar  7 2018 Peter Robinson <pbrobinson@fedoraproject.org> 1.3-31
+- Add gcc BR, minor spec cleanups
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-30
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
