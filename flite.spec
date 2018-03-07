@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        30%{?dist}
+Release:        31%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 License:        MIT
 URL:            http://www.speech.cs.cmu.edu/flite/
