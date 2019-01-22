@@ -64,10 +64,7 @@ make flite.html
 make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_libdir}  INSTALLINCDIR=%{buildroot}%{_includedir}/flite
 
 
-%post -p /sbin/ldconfig
-
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files
