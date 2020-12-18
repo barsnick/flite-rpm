@@ -20,6 +20,7 @@ BuildRequires:  texi2html
 BuildRequires:  gcc
 BuildRequires:  autoconf automake libtool
 BuildRequires:  ed alsa-lib-devel
+BuildRequires: make
 
 
 %description
