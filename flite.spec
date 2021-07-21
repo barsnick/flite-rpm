@@ -1,6 +1,6 @@
 Name:           flite
 Version:        1.3
-Release:        37%{?dist}
+Release:        38%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 License:        MIT
 URL:            http://www.speech.cs.cmu.edu/flite/
@@ -81,6 +81,9 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 
 %changelog
+* Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-38
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-37
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
