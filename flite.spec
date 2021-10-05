@@ -56,7 +56,8 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 rm %{buildroot}%{_libdir}/libflite*.a
 
 
-%ldconfig_scriptlets
+%check
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} make -C testsuite do_thread_test
 
 
 %files
@@ -78,6 +79,8 @@ rm %{buildroot}%{_libdir}/libflite*.a
 - update to 2.2 (#1062487)
 - drop obsolete patches
 - update BuildRequires
+- run testsuite
+- drop obsolete ldconfig_scriptlets macro
 
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-38
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
