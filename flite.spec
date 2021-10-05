@@ -1,19 +1,11 @@
 Name:           flite
-Version:        1.3
-Release:        38%{?dist}
+Version:        2.2
+Release:        1%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 License:        MIT
 URL:            http://www.speech.cs.cmu.edu/flite/
 
-Source0:        http://www.speech.cs.cmu.edu/flite/packed/%{name}-%{version}/%{name}-%{version}-release.tar.gz
-Source1:        README-ALSA.txt
-Patch0:         flite-1.3-sharedlibs.patch
-Patch1:         flite-1.3-doc_texinfo.patch
-Patch2:         flite-1.3-alsa_support.patch
-Patch3:         flite-1.3-implicit_dso_linking.patch
-Patch4:         0001-auserver.c-Only-write-audio-data-to-a-file-in-debug-.patch
-Patch5:         flite-0001-Fixed-texi2html-ambiguity.patch
-BuildRequires:  texi2html
+Source0:        https://github.com/festvox/flite/archive/v%{version}/flite-%{version}.tar.gz
 # texi2pdf
 # WARNING see explanation about PDF doc below.
 #BuildRequires:  texinfo-tex
@@ -21,6 +13,8 @@ BuildRequires:  gcc
 BuildRequires:  autoconf automake libtool
 BuildRequires:  ed alsa-lib-devel
 BuildRequires: make
+BuildRequires:  pulseaudio-libs-devel
+BuildRequires:  texinfo
 
 
 %description
@@ -39,19 +33,15 @@ Development files for Flite, a small, fast speech synthesis engine.
 
 
 %prep
-%setup -q -n %{name}-%{version}-release
-%patch0 -p1 -b .flite-1.3-sharedlibs
-%patch1 -p1 -b .flite-1.3-doc_texinfo
-%patch2 -p1 -b .flite-1.3-alsa_support
-%patch3 -p1 -b .flite-1.3-implicit_dso_linking
-%patch4 -p1
-%patch5 -p1
-cp -p %{SOURCE1} .
+%setup -q
 
 
 %build
 autoreconf -vif
-%configure --enable-shared --with-audio=alsa
+%configure \
+    --enable-shared \
+    --with-audio=pulseaudio \
+
 # This package fails parallel make (thus cannot be built using "_smp_flags")
 make
 # Build documentation
@@ -63,6 +53,7 @@ make flite.html
 
 %install
 make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_libdir}  INSTALLINCDIR=%{buildroot}%{_includedir}/flite
+rm %{buildroot}%{_libdir}/libflite*.a
 
 
 %ldconfig_scriptlets
@@ -70,7 +61,9 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 %files
 %license COPYING
-%doc ACKNOWLEDGEMENTS README doc/html README-ALSA.txt
+%doc ACKNOWLEDGEMENTS
+%doc doc/html
+%doc README.md
 %{_libdir}/*.so.*
 %{_bindir}/*
 
@@ -81,6 +74,11 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 
 %changelog
+* Tue Oct 05 2021 Dominik 'Rathann' Mierzejewski <rpm@greysector.net> 2.2-1
+- update to 2.2 (#1062487)
+- drop obsolete patches
+- update BuildRequires
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-38
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
