@@ -6,6 +6,7 @@ License:        MIT
 URL:            http://www.speech.cs.cmu.edu/flite/
 
 Source0:        https://github.com/festvox/flite/archive/v%{version}/flite-%{version}.tar.gz
+Patch0:         flite-2.2-lto.patch
 # texi2pdf
 # WARNING see explanation about PDF doc below.
 #BuildRequires:  texinfo-tex
@@ -34,6 +35,7 @@ Development files for Flite, a small, fast speech synthesis engine.
 
 %prep
 %setup -q
+%patch0 -p1 -b .lto
 
 
 %build
@@ -82,6 +84,7 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make -C testsuite do_thread_test
 - drop obsolete ldconfig_scriptlets macro
 - enable parallel make
 - use modern macros
+- fix LTO warnings
 
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-38
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
