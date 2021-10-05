@@ -42,8 +42,7 @@ autoreconf -vif
     --enable-shared \
     --with-audio=pulseaudio \
 
-# This package fails parallel make (thus cannot be built using "_smp_flags")
-make
+%make_build
 # Build documentation
 cd doc
 # WARNING "make doc" provides a huge PDF file. It was decided not to produce/package it.
@@ -52,7 +51,7 @@ make flite.html
 
 
 %install
-make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_libdir}  INSTALLINCDIR=%{buildroot}%{_includedir}/flite
+%make_install
 rm %{buildroot}%{_libdir}/libflite*.a
 
 
@@ -81,6 +80,8 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make -C testsuite do_thread_test
 - update BuildRequires
 - run testsuite
 - drop obsolete ldconfig_scriptlets macro
+- enable parallel make
+- use modern macros
 
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-38
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
