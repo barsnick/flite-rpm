@@ -1,3 +1,10 @@
+%ifnarch s390x
+%bcond_without check
+%else
+# https://github.com/festvox/flite/issues/67
+%bcond_with check
+%endif
+
 Name:           flite
 Version:        2.2
 Release:        1%{?dist}
@@ -57,8 +64,10 @@ make flite.html
 rm %{buildroot}%{_libdir}/libflite*.a
 
 
+%if %{with check}
 %check
 LD_LIBRARY_PATH=%{buildroot}%{_libdir} make -C testsuite do_thread_test
+%endif
 
 
 %files
@@ -85,6 +94,7 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make -C testsuite do_thread_test
 - enable parallel make
 - use modern macros
 - fix LTO warnings
+- skip test on s390x
 
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-38
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
