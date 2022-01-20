@@ -7,7 +7,7 @@
 
 Name:           flite
 Version:        2.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 License:        MIT
 URL:            http://www.speech.cs.cmu.edu/flite/
@@ -85,6 +85,9 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make -C testsuite do_thread_test
 
 
 %changelog
+* Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 2.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Tue Oct 05 2021 Dominik 'Rathann' Mierzejewski <rpm@greysector.net> 2.2-1
 - update to 2.2 (#1062487)
 - drop obsolete patches
